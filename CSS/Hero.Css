@@ -1,0 +1,38 @@
+.HeroSec {
+    width: 100svw;
+    height: 60svh;
+    position: relative;
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#Hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.HeVid {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+    object-fit: cover;
+    border-radius: 50px;
+    opacity: 0.92;
+    filter: brightness(1.05) contrast(1.05);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+    max-width: 45%;
+    max-height: 15vh;
+}
+
+.HeVid:hover {
+    transform: translate(-50%, -50%) scale(1.02);
+}

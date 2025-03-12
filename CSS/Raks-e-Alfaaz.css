@@ -1,0 +1,66 @@
+/**
+ * Raks-e-Alfaaz.css - Dance of Words
+ * Styling for the text animation library
+ */
+
+/* Hide hero text elements by default to prevent flash of unstyled content */
+.Hero .raks-text,
+.Hero .design-text {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Word container styling */
+.raks-word {
+    display: inline-block;
+    overflow: hidden !important;
+    vertical-align: top;
+    margin-right: 0.25em;
+    position: relative;
+}
+
+/* Character styling */
+.raks-char {
+    display: inline-block;
+    position: relative;
+    transform-origin: center;
+    overflow: visible !important;
+}
+
+/* First half characters */
+.raks-char-first {
+    color: inherit;
+}
+
+/* Second half characters */
+.raks-char-second {
+    color: inherit;
+}
+
+/* Apply to menu items */
+.MorphTemSocMedList,
+.MorphTemBoutList,
+.InTouch,
+.Email,
+.DeFlow,
+.MorphTemSocMed,
+.MorphTemBoutWherOuts {
+    overflow: hidden !important;
+}
+
+/* Ensure menu list items have proper display */
+.MorphTemSocMedList li,
+.MorphTemBoutList li {
+    overflow: hidden !important;
+    display: block;
+}
+
+/* Ensure anchor tags inherit display properties */
+.MorphTemSocMedList a,
+.MorphTemBoutList a,
+.InTouch a,
+.Email a,
+.DeFlow a {
+    overflow: hidden !important;
+    display: inline-block;
+}

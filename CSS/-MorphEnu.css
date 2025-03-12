@@ -1,0 +1,304 @@
+.MorphEnu- {
+    background: linear-gradient(
+        125deg,
+        #0a0a0a,
+        #1a1a1a 25%,
+        #141414 50%,
+        #0f0f0f 75%,
+        #080808
+    );
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    mix-blend-mode: difference;
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    transition: opacity 0.3s ease;
+}
+
+.MorphEnu-::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        transparent 30%,
+        rgba(255, 255, 255, 0.03) 40%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.2) 60%,
+        rgba(0, 0, 0, 0.3) 70%,
+        rgba(0, 0, 0, 0.4) 80%
+    );
+    mix-blend-mode: overlay;
+    animation: gradientSpin 30s linear infinite;
+    pointer-events: none;
+}
+
+.MorphEnu-::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        217deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(255, 0, 0, 0) 70.71%
+    ), linear-gradient(
+        127deg,
+        rgba(0, 255, 0, 0.03),
+        rgba(0, 255, 0, 0) 70.71%
+    ), linear-gradient(
+        336deg,
+        rgba(0, 0, 255, 0.03),
+        rgba(0, 0, 255, 0) 70.71%
+    );
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+}
+
+.MorphEnu-.active {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+@keyframes gradientSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main Menu Container */
+.MorphTems {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 6rem;
+    color: #ffffff;
+    z-index: 10;
+    position: relative;
+    gap: 12rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Social Media Column */
+.MorphTemSocials {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25%;
+    padding-left: 10%;
+}
+
+/* Menu Column */
+.MorphTemBouts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40%;
+}
+
+/* Headings */
+.MorphTemSocMed, 
+.MorphTemBoutWherOuts {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #999;
+    text-transform: capitalize;
+    margin-bottom: 3rem;
+}
+
+/* Lists */
+.MorphTemSocMedUl,
+.MorphTemBoutUl {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.MorphTemBoutUl{
+    position: relative;
+    bottom: 4vh;
+}
+
+.MorphTemSocMedList {
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.MorphTemSocMedList:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.MorphTemBoutList {
+    margin-bottom: 0.2rem;
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.MorphTemBoutList:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+
+.InTouch {
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: #999;
+}
+
+/* Animated links styling */
+.Email, .DeFlow {
+    color: #ffffffcb;
+    text-decoration: none;
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.2rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.Email::after, .DeFlow::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    transform-origin: right;
+    transform: scaleX(1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.Email:hover, .DeFlow:hover {
+    color: #fff;
+    transform: translateY(-3px);
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.Email:hover::after, .DeFlow:hover::after {
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+/* Glowing effect on hover */
+.Email::before, .DeFlow::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+.Email:hover::before, .DeFlow:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Menu text elements - Add overflow hidden to all text elements */
+.MorphTemSocMed,
+.MorphTemSocMedList,
+.MorphTemBoutWherOuts,
+.MorphTemBoutList,
+.InTouch,
+.Email,
+.DeFlow,
+.WannaTouch,
+.OurFlow {
+    overflow: hidden;
+}
+
+/* Make sure list items have proper display for animation */
+.MorphTemSocMedList,
+.MorphTemBoutList {
+    display: block;
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .MorphTemBoutList {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .MorphTems {
+        padding: 3rem;
+    }
+    
+    .MorphTemBoutList {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .MorphTems {
+        flex-direction: column;
+        padding: 2rem;
+        gap: 4rem;
+    }
+    
+    .MorphTemSocials,
+    .MorphTemBouts {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .MorphTemSocMed, 
+    .MorphTemBoutWherOuts {
+        text-align: center;
+    }
+    
+    .MorphTemBoutList {
+        font-size: 2.5rem;
+    }
+    
+    .WannaTouch,
+    .OurFlow {
+        text-align: center;
+        padding-bottom: 2rem;
+    }
+}
