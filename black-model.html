@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Model Viewer</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #6b3e07;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+        #info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            font-family: monospace;
+            z-index: 100;
+        }
+        #controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            z-index: 100;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">Loading model...</div>
+    <div id="controls">
+        <button id="smaller">Make Smaller</button>
+        <button id="larger">Make Larger</button>
+        <button id="darker">Make Darker</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+
+    <script>
+        // Global variables
+        let scene, camera, renderer, controls, model;
+        let currentScale = 0.3;
+        let currentColor = 0x333333;
+
+        // Init function
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x6b3e07);
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 0, 2);
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            // Basic lighting
+            const light = new THREE.AmbientLight(0xffffff, 1.0);
+            scene.add(light);
+
+            // Reference geometry for comparison
+            const refGeo = new THREE.IcosahedronGeometry(0.5, 0);
+            const refMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const reference = new THREE.Mesh(refGeo, refMat);
+            reference.position.set(-1.2, 0, 0);
+            scene.add(reference);
+
+            // Controls setup
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // Load the model
+            loadModel();
+
+            // Event listeners
+            window.addEventListener('resize', onWindowResize);
+            
+            // Setup UI controls
+            document.getElementById('smaller').addEventListener('click', function() {
+                if (model) {
+                    currentScale *= 0.8;
+                    model.scale.set(currentScale, currentScale, currentScale);
+                }
+            });
+            
+            document.getElementById('larger').addEventListener('click', function() {
+                if (model) {
+                    currentScale *= 1.2;
+                    model.scale.set(currentScale, currentScale, currentScale);
+                }
+            });
+            
+            document.getElementById('darker').addEventListener('click', function() {
+                if (model) {
+                    // Make color darker
+                    currentColor = 0x000000; // Force to black
+                    updateModelMaterial();
+                }
+            });
+
+            // Start animation loop
+            animate();
+        }
+
+        // Load model function
+        function loadModel() {
+            const infoDiv = document.getElementById('info');
+            
+            // Setup DRACO loader
+            const dracoLoader = new THREE.DRACOLoader();
+            dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+            
+            const loader = new THREE.GLTFLoader();
+            loader.setDRACOLoader(dracoLoader);
+            
+            loader.load(
+                'models/ExploRa.glb',
+                function(gltf) {
+                    infoDiv.textContent = 'Model loaded!';
+                    
+                    model = gltf.scene;
+                    
+                    // Force initial scale
+                    model.scale.set(currentScale, currentScale, currentScale);
+                    
+                    // Apply materials to model
+                    updateModelMaterial();
+                    
+                    // Center model
+                    model.position.set(0, 0, 0);
+                    
+                    // Add to scene
+                    scene.add(model);
+                    
+                    // Hide info after 2 seconds
+                    setTimeout(() => {
+                        infoDiv.style.display = 'none';
+                    }, 2000);
+                },
+                function(xhr) {
+                    if (xhr.lengthComputable) {
+                        const percent = (xhr.loaded / xhr.total * 100).toFixed(1);
+                        infoDiv.textContent = `Loading: ${percent}%`;
+                    }
+                },
+                function(error) {
+                    infoDiv.textContent = 'Error loading model';
+                    console.error(error);
+                }
+            );
+        }
+        
+        // Update model materials
+        function updateModelMaterial() {
+            if (!model) return;
+            
+            model.traverse(function(child) {
+                if (child.isMesh) {
+                    // Create flat black material
+                    const blackMaterial = new THREE.MeshBasicMaterial({
+                        color: currentColor,
+                        side: THREE.DoubleSide,
+                        wireframe: false
+                    });
+                    
+                    // Assign material
+                    child.material = blackMaterial;
+                    
+                    // Also create a wireframe to ensure visibility
+                    if (!child.userData.hasWireframe) {
+                        const wireframe = new THREE.LineSegments(
+                            new THREE.WireframeGeometry(child.geometry),
+                            new THREE.LineBasicMaterial({ color: 0x222222 })
+                        );
+                        child.add(wireframe);
+                        child.userData.hasWireframe = true;
+                    }
+                }
+            });
+        }
+
+        // Handle window resize
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>

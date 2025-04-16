@@ -1,0 +1,184 @@
+/**
+ * Glitch Effect CSS
+ * Hover-based text glitch effect for menu items
+ */
+
+/* Base glitch styles */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+    cursor: pointer;
+    transition: text-shadow 0.3s ease;
+}
+
+/* Only apply glitch effect on hover */
+/* Commented out for repulsion effect
+.glitch-text:hover {
+    animation: glitch-skew 1s cubic-bezier(.25, .46, .45, .94) infinite alternate-reverse;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+/* Cyan/blue glitch layer */
+/* Commented out for repulsion effect
+.glitch-text:hover::before {
+    animation: glitch-color 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    color: #00e6ff; /* Bright cyan */
+    z-index: -1;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translate(-2px, -2px);
+    text-shadow: none;
+}
+*/
+
+/* Magenta/purple glitch layer */
+/* Commented out for repulsion effect
+.glitch-text:hover::after {
+    animation: glitch-color 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
+    color: #f700ff; /* Bright magenta */
+    z-index: -2;
+    clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+    transform: translate(2px, 2px);
+    text-shadow: none;
+}
+*/
+
+/* Animation for color shifting */
+@keyframes glitch-color {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-3px, 3px);
+    }
+    40% {
+        transform: translate(-3px, -3px);
+    }
+    60% {
+        transform: translate(3px, 3px);
+    }
+    80% {
+        transform: translate(3px, -3px);
+    }
+    to {
+        transform: translate(0);
+    }
+}
+
+/* Animation for text skewing */
+@keyframes glitch-skew {
+    0% {
+        transform: skew(0deg);
+    }
+    10% {
+        transform: skew(0.5deg);
+    }
+    20% {
+        transform: skew(-1deg);
+    }
+    30% {
+        transform: skew(0deg);
+    }
+    40% {
+        transform: skew(-0.5deg);
+    }
+    50% {
+        transform: skew(0.5deg);
+    }
+    60% {
+        transform: skew(0deg);
+    }
+    70% {
+        transform: skew(0.5deg);
+    }
+    80% {
+        transform: skew(-0.25deg);
+    }
+    90% {
+        transform: skew(0.25deg);
+    }
+    100% {
+        transform: skew(0deg);
+    }
+}
+
+/* Apply to menu items */
+.MorphTemSocMedList,
+.MorphTemBoutList,
+.InTouch,
+.Email,
+.DeFlow {
+    transition: all 0.3s ease;
+}
+
+/* Add underline styling for menu items */
+.MorphTemSocMedList,
+.MorphTemBoutList {
+    position: relative;
+    padding-bottom: 0.2rem;
+}
+
+/* Create underline effect */
+.MorphTemSocMedList::after,
+.MorphTemBoutList::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    transform-origin: right;
+    transform: scaleX(1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1; /* Ensure it's above the glitch layers */
+}
+
+/* Animate underline on hover */
+.MorphTemSocMedList:hover::after,
+.MorphTemBoutList:hover::after {
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+/* Enhance glitch effect for specific elements */
+/* Commented out for repulsion effect
+.MorphTemSocMed .glitch-text:hover::before {
+    color: #00e6ff; /* Cyan */
+}
+
+.MorphTemSocMed .glitch-text:hover::after {
+    color: #f700ff; /* Magenta */
+}
+
+.MorphTemBoutWherOuts .glitch-text:hover::before {
+    color: #00ff95; /* Mint green */
+}
+
+.MorphTemBoutWherOuts .glitch-text:hover::after {
+    color: #ff5e00; /* Orange */
+}
+
+.InTouch .glitch-text:hover::before,
+.Email .glitch-text:hover::before,
+.DeFlow .glitch-text:hover::before {
+    color: #00c3ff; /* Light blue */
+}
+
+.InTouch .glitch-text:hover::after,
+.Email .glitch-text:hover::after,
+.DeFlow .glitch-text:hover::after {
+    color: #ff0066; /* Hot pink */
+}
+*/
