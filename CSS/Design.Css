@@ -279,13 +279,3 @@ svg.hidden {
     letter-spacing: 0.2vw;
     transition: color 1s ease;
 }
-
-
-
-
-
-.ExploraSec{
-    background-color: #6b3e07;
-    height: 110svh;
-    width: 100svw;
-}
